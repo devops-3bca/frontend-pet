@@ -43,3 +43,7 @@ The frontend communicates with the Spring Boot backend at `http://localhost:8080
 - Bootstrap 5
 - Axios for API calls
 - CSS3 with gradients and animations
+
+
+Minor update for pull request
+
