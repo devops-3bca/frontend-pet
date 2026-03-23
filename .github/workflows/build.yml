@@ -3,7 +3,10 @@ name: SonarCloud Frontend Analysis
 on:
   push:
     branches:
-      - main
+      - '**'  
+  pull_request:
+    branches:
+      - '**'   
 
 jobs:
   sonar:
@@ -20,3 +23,4 @@ jobs:
           args: >
             -Dsonar.projectKey=sudeephakumar-sketch_frontend-pet
             -Dsonar.organization=sudeephakumar-sketch
+            -Dsonar.branch.name=${{ github.ref_name }}
