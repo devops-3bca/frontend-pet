@@ -1,10 +1,12 @@
 // src/api/petApi.js
 import axios from 'axios';
 
-// Use environment variable for backend URL
+// Backend URL
 const API_BASE_URL = 'https://backend-pet-edhd.onrender.com/api/pets';
+
 const petApi = {
-  // Get all pets
+
+  // ✅ Get all pets
   getAllPets: async () => {
     try {
       const response = await axios.get(API_BASE_URL);
@@ -15,7 +17,7 @@ const petApi = {
     }
   },
 
-  // Get only available pets
+  // ✅ Get available pets
   getAvailablePets: async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/available`);
@@ -26,7 +28,7 @@ const petApi = {
     }
   },
 
-  // Get adopted pets
+  // ✅ Get adopted pets
   getAdoptedPets: async () => {
     try {
       const response = await axios.get(`${API_BASE_URL}/adopted`);
@@ -37,7 +39,18 @@ const petApi = {
     }
   },
 
-  // Get pet by ID
+  // ✅ NEW: Get available pets count
+  getAvailableCount: async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/available-count`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching available count:', error.message);
+      throw error;
+    }
+  },
+
+  // ✅ Get pet by ID
   getPetById: async (id) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/${id}`);
@@ -48,7 +61,7 @@ const petApi = {
     }
   },
 
-  // Add a new pet
+  // ✅ Add a new pet
   addPet: async (petData) => {
     try {
       const response = await axios.post(API_BASE_URL, petData);
@@ -59,7 +72,7 @@ const petApi = {
     }
   },
 
-  // Adopt a pet
+  // ✅ Adopt a pet
   adoptPet: async (id) => {
     try {
       const response = await axios.put(`${API_BASE_URL}/${id}/adopt`);
@@ -70,7 +83,7 @@ const petApi = {
     }
   },
 
-  // Delete a pet
+  // ✅ Delete a pet
   deletePet: async (id) => {
     try {
       const response = await axios.delete(`${API_BASE_URL}/${id}`);
@@ -81,7 +94,7 @@ const petApi = {
     }
   },
 
-  // Update a pet
+  // ✅ Update a pet
   updatePet: async (id, petData) => {
     try {
       const response = await axios.put(`${API_BASE_URL}/${id}`, petData);

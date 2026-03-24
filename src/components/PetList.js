@@ -35,14 +35,16 @@ const PetList = ({ refreshTrigger, onEdit }) => {
     fetchPets();
   }, [refreshTrigger, filter, fetchPets]);
 
+  // ✅ FRONTEND COUNT (BEST WAY)
+  const availableCount = pets.filter(p => !p.adopted).length;
+  const adoptedCount = pets.filter(p => p.adopted).length;
+
   const handleAdopt = async (petId) => {
     try {
-      console.log(`Adopting pet with ID: ${petId}`);
       await petApi.adoptPet(petId);
       alert('Pet adopted successfully! 🎉');
       fetchPets();
     } catch (err) {
-      console.error('Full adopt error:', err);
       alert(`Failed to adopt pet: ${err.message || 'Unknown error'}`);
     }
   };
@@ -50,13 +52,10 @@ const PetList = ({ refreshTrigger, onEdit }) => {
   const handleDelete = async (petId) => {
     if (window.confirm('Are you sure you want to delete this pet?')) {
       try {
-        console.log(`Deleting pet with ID: ${petId}`);
-        const result = await petApi.deletePet(petId);
-        console.log('Delete result:', result);
+        await petApi.deletePet(petId);
         alert('Pet deleted successfully! ✅');
         fetchPets();
       } catch (err) {
-        console.error('Full delete error:', err);
         alert(`Failed to delete pet: ${err.message || 'Unknown error'}`);
       }
     }
@@ -71,6 +70,12 @@ const PetList = ({ refreshTrigger, onEdit }) => {
       <Container>
         <div className="list-header">
           <h2>🐾 Pet Adoption Center</h2>
+
+          {/* ✅ COUNT DISPLAY */}
+          <h4 style={{ color: "green" }}>
+            Available: {availableCount} | Adopted: {adoptedCount}
+          </h4>
+
           <div className="filter-buttons">
             <ButtonGroup>
               <Button 
@@ -80,19 +85,21 @@ const PetList = ({ refreshTrigger, onEdit }) => {
               >
                 All Pets ({pets.length})
               </Button>
+
               <Button 
                 variant={filter === 'available' ? 'warning' : 'outline-warning'}
                 onClick={() => setFilter('available')}
                 className="filter-btn"
               >
-                Available
+                Available ({availableCount})
               </Button>
+
               <Button 
                 variant={filter === 'adopted' ? 'success' : 'outline-success'}
                 onClick={() => setFilter('adopted')}
                 className="filter-btn"
               >
-                Adopted
+                Adopted ({adoptedCount})
               </Button>
             </ButtonGroup>
           </div>
